@@ -1,0 +1,40 @@
+import org.apache.tools.ant.filters.*
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenLocal()
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://repo.maven.apache.org/maven2/' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT'
+}
+
+processResources {
+    filter ReplaceTokens, tokens: [
+            "name": project.property("name"),
+            "version": project.property("version"),
+            "author": project.property("author"),
+            "main": project.property("main")
+    ]
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}

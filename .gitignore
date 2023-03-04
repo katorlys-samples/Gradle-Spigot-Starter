@@ -1,0 +1,10 @@
+target
+build
+bin
+*.class
+/.classpath
+/.DS_Store
+
+.gradle
+*.jar
+!gradle-wrapper.jar
